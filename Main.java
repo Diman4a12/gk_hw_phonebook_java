@@ -1,27 +1,25 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Main {
 
     public static void main(String[] args) {
-        String name1;
-        String name2;
-        int phone1;
-        int phone2;
+        String[] name = { "Иван Иванов", "Николай Сидоров", "Петр Петров", "Алексей Кузнецов", "Сергей Сергеев",
+                "Анна Болотникова", "Татьяна Кретова", "Светлана Светикова", "Вероника Козлова" }; // 9
 
-        name1 = "Ivanov";
-        name2 = "Petrov";
-        phone1 = 123456;
-        phone2 = 654321;
+        Random phone = new Random();
+        Random nameRnd = new Random();
 
         PhoneBook myPhoneBook = new PhoneBook();
-        myPhoneBook.add(name1, phone1);
-        myPhoneBook.add(name1, phone2);
-        myPhoneBook.add(name2, phone2);
 
-        System.out.println(myPhoneBook.find(name1));
+        for (int i = 0; i < 20; i++) {
+            myPhoneBook.add(name[nameRnd.nextInt(9)], phone.nextInt(999_999 - 100_000 + 1) + 100_000);
+        }
+
+        System.out.println(myPhoneBook.find("Иван Иванов"));
         System.out.println(PhoneBook.getPhoneBook());
-        System.out.println(myPhoneBook.find("Me"));
+
     }
 
     public static class PhoneBook {
