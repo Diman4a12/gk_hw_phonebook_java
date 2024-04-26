@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 
 
 
@@ -21,18 +22,45 @@ public class Main {
 
         for (int i = 0; i < 20; i++) {
             myPhoneBook.add(name[nameRnd.nextInt(9)], phone.nextInt(999_999 - 100_000 + 1) + 100_000);
-        }
-
-        System.out.println(PhoneBook.getPhoneBook()); //Для сравнения не отсортированный
-        System.out.println("-----------------------------------------------------");
-        myPhoneBook.printPhone(); //Отсортированный справочник
+        } 
         
+       
+        Scanner sc = new Scanner(System.in, "Cp866");
+        boolean flag = true;
+        while(flag){
+            System.out.println("Укажите что хотите сделать (Добавить, Удалить, Вывести, Найти, Выход)");
+            String answer = sc.nextLine();            
+            if (answer.equals("Добавить")){
+                System.out.println("Введите имя:");
+                String nameIn = sc.nextLine();
+                System.out.println("Введите номер (6 цифр):");
+                Integer phoneIn = sc.nextInt();
+                myPhoneBook.add(nameIn, phoneIn);
+                sc.nextLine();
+            }else if(answer.equals("Удалить")){
+                System.out.println("Введите имя:");
+                String nameDel = sc.nextLine();                
+                myPhoneBook.delName(nameDel);
+            }else if(answer.equals("Вывести")){
+                myPhoneBook.printPhone();        
+            }else if(answer.equals("Найти")){
+                System.out.println("Введите имя:");
+                String nameFind = sc.nextLine();                
+                myPhoneBook.find(nameFind);
+            }else if(answer.equals("Выход")){
+                flag = false;
+                sc.close();
+                } else {
+                    System.out.println("Нет такой команды. Прогармма закрывается)");
+                    System.exit(0);
+                }
 
-    }
+    }           
+}
 
-    public static class PhoneBook {
+    public static class  PhoneBook {
 
-        static HashMap<String, ArrayList<Integer>> phoneBook = new HashMap<>();
+        public  HashMap<String, ArrayList<Integer>> phoneBook = new HashMap<>();
 
         public void add(String name, Integer phoneNum) {
 
@@ -43,20 +71,22 @@ public class Main {
 
         }     
 
-		public ArrayList<Integer> find(String name) {
+		public void find(String name) {
 
             if (!phoneBook.containsKey(name)) {
-                return new ArrayList<>();
+                System.out.println("Нет такой записи");
             } else {
-                return phoneBook.get(name);
+                System.out.println(phoneBook.get(name)); 
             }
 
-        }
-        //Метод только для сравнения отсортированного и нет
-        
-        public static HashMap<String, ArrayList<Integer>> getPhoneBook() {
+        }      
 
-            return phoneBook;
+        public void delName(String name) {
+            if (phoneBook.containsKey(name)){
+                phoneBook.remove(name);
+            }else {
+                System.out.println("Нет такой записи");
+            }
         }
 
        
@@ -81,4 +111,5 @@ public class Main {
     
 
 }
+
 
